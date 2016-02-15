@@ -1,5 +1,13 @@
 cls
 
-".nuget\NuGet.exe" "Install" "FAKE" "-OutputDirectory" "packages" "-ExcludeVersion"
-"packages\FAKE\tools\Fake.exe" build.fsx
-pause
+.paket\paket.bootstrapper.exe
+if errorlevel 1 (
+  exit /b %errorlevel%
+)
+
+.paket\paket.exe restore
+if errorlevel 1 (
+  exit /b %errorlevel%
+)
+
+packages\FAKE\tools\FAKE.exe build.fsx %*
